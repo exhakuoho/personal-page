@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+const categories = ['創業', '工作', '顧問', '教學', '研究', '教育'] as const;
+const grouped = categories
+  .map((c) => ({ c, items: all.filter((e) => e.data.category === c) }))
+  .filter((g) => g.items.length > 0);
+---
+
+<BaseLayout title="經歷｜白空 Haku" description="曾唯誠(白空 Haku)的創業、工作、顧問、教學、研究與教育經歷。">
+  <section class="relative overflow-hidden border-b hairline">
+    <div class="absolute -top-24 right-1/3 w-96 h-96 rounded-full bg-volt-600/15 blur-[100px]"></div>
+    <div class="mx-auto max-w-6xl px-5 py-20 relative">
+      <p class="eyebrow rise rise-1 mb-4">Experience</p>
+      <h1 class="rise rise-2 font-display text-4xl md:text-6xl font-bold mb-6">經歷</h1>
+      <p class="rise rise-3 text-lg text-muted max-w-2xl leading-relaxed">
+        橫跨創業、加工現場、教育與學術研究的跨領域軌跡。
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-5 py-16 space-y-14">
+    {grouped.map((g) => (
+      <div class="reveal">
+        <div class="flex items-center gap-4 mb-6">
+          <h2 class="font-display text-xl font-bold">{g.c}經歷</h2>
+          <div class="grad-line flex-1"></div>
+        </div>
+        <div class="space-y-4">
+          {g.items.map((e) => (
+            <div class="card p-6">
+              <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                <h3 class="font-bold text-lg">{e.data.title}</h3>
+                <span class="font-mono text-xs text-muted">{e.data.period}</span>
+              </div>
+              <p class="font-mono text-sm text-elec-500 dark:text-elec-400 mb-2">
+                {e.data.org}
+                {e.data.placeholder && <span class="text-amber-500/80 ml-2">⚠ 待補</span>}
+              </p>
+              <p class="text-sm text-muted leading-relaxed">{e.data.summary}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

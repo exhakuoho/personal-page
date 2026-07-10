@@ -1,0 +1,66 @@
+---
+const nav = [
+  { href: '/about', label: '關於我' },
+  { href: '/#expertise', label: '專長' },
+  { href: '/projects', label: '專案' },
+  { href: '/awards-news', label: '得獎與新聞' },
+  { href: '/experience', label: '經歷' },
+  { href: '/links', label: '連結' },
+];
+---
+
+<header
+  class="sticky top-0 z-50 backdrop-blur-xl border-b hairline"
+  style="background-color: rgb(var(--bg) / 0.75);"
+>
+  <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between">
+    <a href="/" class="font-display font-bold text-lg tracking-tight">
+      HAKU<span class="grad-text">.</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm">
+      {nav.map((n) => (
+        <a href={n.href} class="text-muted hover:text-elec-500 dark:hover:text-elec-400 transition-colors">
+          {n.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button
+        id="theme-toggle"
+        aria-label="切換深淺模式"
+        class="w-9 h-9 rounded-full border hairline flex items-center justify-center hover:border-volt-500/60 transition-colors"
+      >
+        <span class="dark:hidden">🌙</span>
+        <span class="hidden dark:inline">☀️</span>
+      </button>
+      <button
+        id="menu-toggle"
+        aria-label="開啟選單"
+        class="md:hidden w-9 h-9 rounded-full border hairline flex items-center justify-center"
+      >
+        ☰
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-menu" class="hidden md:hidden border-t hairline px-5 py-4 flex flex-col gap-3 text-sm surface">
+    {nav.map((n) => (
+      <a href={n.href} class="text-muted hover:text-elec-500 transition-colors py-1">
+        {n.label}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<script is:inline>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    root.classList.toggle('dark');
+    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+  });
+  document.getElementById('menu-toggle')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+  });
+</script>

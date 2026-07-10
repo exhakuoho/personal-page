@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { expertiseList } from '../data/expertise';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const zhOf = (slug: string) => expertiseList.find((e) => e.slug === slug)?.zh ?? slug;
+---
+
+<BaseLayout title="專案作品｜白空 Haku" description="白空 Haku 的專案作品庫:智慧製造、AIoT、STEAM 教育與自動化設備開發。">
+  <section class="relative overflow-hidden border-b hairline">
+    <div class="absolute -top-24 right-1/4 w-96 h-96 rounded-full bg-volt-600/15 blur-[100px]"></div>
+    <div class="mx-auto max-w-6xl px-5 py-14 relative">
+      <div class="flex items-center justify-between font-mono text-[11px] text-muted mb-8 border-b hairline pb-3">
+        <span class="flex items-center gap-2"><span class="status-dot"></span> PROJECT DATABASE</span>
+        <span>{projects.length} RECORDS</span>
+      </div>
+      <p class="eyebrow rise rise-1 mb-3">Projects</p>
+      <h1 class="rise rise-2 font-display text-4xl md:text-5xl font-bold mb-4">專案作品庫</h1>
+      <p class="rise rise-3 text-muted max-w-2xl leading-relaxed">
+        從概念到落地——每個專案都是機械、電控、AI 與教育的交會點。
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-12">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {projects.map((p, i) => (
+        <article class="card hud reveal p-5 flex flex-col" style={`transition-delay:${(i % 3) * 50}ms`}>
+          <div class="flex items-center justify-between mb-3">
+            <span class="idx">PRJ-{String(i + 1).padStart(3, '0')}</span>
+            {p.data.featured && <span class="font-mono text-[10px] grad-text">★ FEATURED</span>}
+          </div>
+          <h2 class="font-display text-lg font-bold mb-1.5">{p.data.title}</h2>
+          <p class="text-[13px] text-muted leading-relaxed mb-4 flex-1">{p.data.tagline}</p>
+
+          <div class="mb-3">
+            <div class="spec-row"><span class="spec-key">Status</span><span class="spec-val">{p.data.status}</span></div>
+            <div class="spec-row"><span class="spec-key">Type</span><span class="spec-val">{p.data.tags.slice(0, 2).join(' / ')}</span></div>
+            <div class="spec-row" style="border-bottom:none"><span class="spec-key">Stack</span><span class="spec-val">{p.data.tech.slice(0, 3).join(' · ')}</span></div>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            {p.data.expertise.map((slug) => (
+              <a href={`/expertise/${slug}`} class="chip text-[10px] hover:border-volt-500/60 hover:text-elec-400 transition-colors">
+                {zhOf(slug)}
+              </a>
+            ))}
+          </div>
+
+          {p.data.link ? (
+            <a href={p.data.link} target="_blank" rel="noopener" class="font-mono text-[11px] text-elec-400 border-t hairline pt-2.5 hover:translate-x-1 inline-block transition-transform">
+              DEPLOY → {new URL(p.data.link).hostname}
+            </a>
+          ) : (
+            <span class="font-mono text-[11px] text-muted border-t hairline pt-2.5">// 詳情頁籌備中</span>
+          )}
+        </article>
+      ))}
+    </div>
+
+    <p class="reveal text-center text-[12px] text-muted font-mono mt-10">
+      // 新增一個 Markdown 檔 = 一筆新專案紀錄
+    </p>
+  </section>
+</BaseLayout>

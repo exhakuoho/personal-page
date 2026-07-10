@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const groups = [
+  {
+    title: '品牌與產品',
+    links: [
+      { name: 'DesignJarvis', desc: '設計 × AIoT × 智慧場域', href: 'https://designjarvis.com' },
+      { name: 'Factory Jarvis', desc: '智慧工廠 AIoT 平台', href: 'https://factoryjarvis.designjarvis.com/' },
+      { name: 'FlexPro', desc: '試量產評估系統', href: 'https://flexpro.designjarvis.com' },
+      { name: '406LAB', desc: '技術實驗與研究', href: 'https://406lab.designjarvis.com' },
+      { name: 'Swirl Lamp', desc: '產品設計作品', href: 'https://swirl-lamp.designjarvis.com/' },
+      { name: 'Smart Home', desc: '智慧家庭方案', href: 'https://smarthome.designjarvis.com/' },
+      { name: 'EcoTraker', desc: '環境數據追蹤', href: 'https://ecotraker.designjarvis.com' },
+      { name: 'LOOK 教育', desc: 'STEAM 教育品牌', href: '#', todo: true },
+      { name: 'Formosa31', desc: '鐘錶品牌與門市', href: '#', todo: true },
+    ],
+  },
+  {
+    title: '社群',
+    links: [
+      { name: 'GitHub', desc: '@exhakuoho', href: 'https://github.com/exhakuoho' },
+      { name: 'LinkedIn', desc: '個人檔案', href: '#', todo: true },
+      { name: 'Instagram', desc: '日常與作品', href: '#', todo: true },
+      { name: 'Facebook', desc: '粉絲專頁', href: '#', todo: true },
+      { name: 'YouTube', desc: '教學與專案影片', href: '#', todo: true },
+      { name: 'Threads', desc: '短文與想法', href: '#', todo: true },
+    ],
+  },
+  {
+    title: '聯絡與文件',
+    links: [
+      { name: 'Email', desc: 'service@designjarvis.com', href: 'mailto:service@designjarvis.com' },
+      { name: 'PDF 履歷', desc: '下載完整履歷', href: '#', todo: true },
+    ],
+  },
+];
+---
+
+<BaseLayout title="連結中心｜白空 Haku" description="白空 Haku 的所有品牌、產品、社群與聯絡連結。">
+  <section class="relative overflow-hidden border-b hairline">
+    <div class="absolute -top-24 left-1/2 w-96 h-96 rounded-full bg-elec-500/15 blur-[100px]"></div>
+    <div class="mx-auto max-w-6xl px-5 py-20 relative">
+      <p class="eyebrow rise rise-1 mb-4">Links Hub</p>
+      <h1 class="rise rise-2 font-display text-4xl md:text-6xl font-bold mb-6">連結中心</h1>
+      <p class="rise rise-3 text-lg text-muted max-w-2xl leading-relaxed">
+        所有品牌、產品、社群與聯絡方式,集中在這裡。
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-16 space-y-14">
+    {groups.map((g) => (
+      <div class="reveal">
+        <div class="flex items-center gap-4 mb-6">
+          <h2 class="font-display text-xl font-bold">{g.title}</h2>
+          <div class="grad-line flex-1"></div>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {g.links.map((l) => (
+            <a
+              href={l.href}
+              target={l.href.startsWith('http') ? '_blank' : undefined}
+              rel="noopener"
+              class="card p-5 flex items-center justify-between group"
+            >
+              <div>
+                <p class="font-bold">
+                  {l.name}
+                  {l.todo && <span class="font-mono text-[11px] text-amber-500/80 ml-2">待補連結</span>}
+                </p>
+                <p class="text-sm text-muted font-mono">{l.desc}</p>
+              </div>
+              <span class="text-elec-500 dark:text-elec-400 group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

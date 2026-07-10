@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { expertiseList } from '../../data/expertise';
+import { getCollection } from 'astro:content';
+
+export function getStaticPaths() {
+  return expertiseList.map((e) => ({ params: { slug: e.slug }, props: { e } }));
+}
+
+const { e } = Astro.props;
+const idx = expertiseList.findIndex((x) => x.slug === e.slug);
+const prev = expertiseList[(idx + expertiseList.length - 1) % expertiseList.length];
+const next = expertiseList[(idx + 1) % expertiseList.length];
+
+// 相關專案(僅列出連結,不內嵌)
+const related = (await getCollection('projects'))
+  .filter((p) => p.data.expertise.includes(e.slug))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title={`${e.zh} ${e.en}｜白空 Haku`} description={e.intro}>
+  <section class="relative overflow-hidden border-b hairline">
+    <div class="absolute -top-24 right-0 w-96 h-96 rounded-full bg-volt-600/15 blur-[100px]"></div>
+    <div class="mx-auto max-w-6xl px-5 py-20 relative">
+      <p class="eyebrow rise rise-1 mb-4">{e.en}</p>
+      <h1 class="rise rise-2 font-display text-4xl md:text-6xl font-bold mb-6">
+        <span class="mr-3">{e.icon}</span>{e.zh}
+      </h1>
+      <p class="rise rise-3 text-lg text-muted max-w-2xl leading-relaxed">{e.intro}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="reveal">
+        <h2 class="font-display text-2xl font-bold mb-6">能力範圍</h2>
+        <ul class="space-y-3">
+          {e.items.map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-elec-500 to-volt-500 shrink-0"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="card p-8 h-full flex flex-col justify-between">
+          <div>
+            <p class="eyebrow mb-4">Point of View</p>
+            <p class="text-lg leading-relaxed">{e.highlight}</p>
+          </div>
+          {related.length > 0 && (
+            <div class="mt-8 pt-6 border-t hairline">
+              <p class="font-mono text-xs text-muted uppercase tracking-widest mb-3">相關專案</p>
+              <div class="flex flex-wrap gap-2">
+                {related.map((p) => (
+                  <a href="/projects" class="chip hover:border-volt-500/60 hover:text-elec-400 transition-colors">
+                    {p.data.title}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 pb-8">
+    <div class="flex justify-between border-t hairline pt-8">
+      <a href={`/expertise/${prev.slug}`} class="btn-ghost text-sm">← {prev.zh}</a>
+      <a href={`/expertise/${next.slug}`} class="btn-ghost text-sm">{next.zh} →</a>
+    </div>
+  </section>
+</BaseLayout>

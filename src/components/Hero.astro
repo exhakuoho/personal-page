@@ -1,0 +1,191 @@
+---
+---
+
+<section class="relative overflow-hidden border-b hairline">
+  <!-- 動態網格背景(更密) -->
+  <div
+    class="absolute inset-0 opacity-[0.4] dark:opacity-30"
+    style="
+      background-image:
+        linear-gradient(rgb(var(--line)) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(var(--line)) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, black 25%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, black 25%, transparent 100%);
+    "
+  ></div>
+
+  <!-- 漸層光暈 -->
+  <div class="absolute -top-32 -left-32 w-[30rem] h-[30rem] rounded-full bg-elec-500/20 blur-[110px]"></div>
+  <div class="absolute -bottom-40 -right-24 w-[34rem] h-[34rem] rounded-full bg-volt-600/20 blur-[120px]"></div>
+
+  <!-- 粒子網絡 -->
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full"></canvas>
+
+  <div class="relative mx-auto max-w-6xl px-5 pt-10 pb-10 w-full">
+    <!-- 頂部系統列 -->
+    <div class="rise rise-1 flex items-center justify-between font-mono text-[11px] text-muted mb-10 border-b hairline pb-3 gap-3 flex-wrap">
+      <span class="flex items-center gap-2">
+        <span class="status-dot"></span> SYSTEM ONLINE
+      </span>
+      <span class="hidden sm:inline">HAKU.PERSONAL_HUB // v1.0</span>
+      <span>22.62°N, 120.30°E — KAOHSIUNG, TW</span>
+    </div>
+
+    <div class="grid lg:grid-cols-[1.5fr_1fr] gap-10 items-start">
+      <!-- 左:主標題 -->
+      <div>
+        <p class="eyebrow rise rise-1 mb-4">Personal Brand Hub — Engineering × Education</p>
+
+        <h1 class="rise rise-2 font-display font-bold leading-[1.02] text-5xl md:text-7xl tracking-tight mb-5">
+          曾唯誠<br />
+          <span class="grad-text">白空 Haku</span>
+        </h1>
+
+        <p class="rise rise-3 font-mono text-sm text-muted tracking-wider mb-6">
+          機械設計 <span class="text-elec-400">×</span> AIoT
+          <span class="text-volt-400">×</span> STEAM 教育
+          <span class="text-elec-400">×</span> 精密製造
+        </p>
+
+        <p class="rise rise-3 max-w-xl text-[15px] text-muted leading-relaxed mb-4">
+          將機械設計、電控系統、3D 列印、CNC 加工與 AI 應用,整合成可實際落地的產品、教具與教育方案——讓技術能被理解、能被使用、也能產生實際價值。
+        </p>
+
+        <!-- 終端機打字行 -->
+        <p class="rise rise-4 font-mono text-xs text-elec-400 mb-8 h-4">
+          <span class="text-muted">$</span> <span id="type-line"></span><span class="blink">▍</span>
+        </p>
+
+        <div class="rise rise-5 flex flex-wrap gap-3">
+          <a href="/projects" class="btn-primary text-sm">查看專案庫 →</a>
+          <a href="/#expertise" class="btn-ghost text-sm">六大專長</a>
+          <a href="#contact" class="btn-ghost text-sm">合作洽詢</a>
+        </div>
+      </div>
+
+      <!-- 右:系統面板 -->
+      <div class="rise rise-4 hud card p-5 font-mono text-sm backdrop-blur-sm" style="background-color: rgb(var(--surface) / 0.7);">
+        <div class="flex items-center justify-between text-[11px] text-muted uppercase tracking-widest mb-4 pb-3 border-b hairline">
+          <span>Profile.Status</span>
+          <span class="text-elec-400">LIVE</span>
+        </div>
+        <div class="spec-row"><span class="spec-key">Roles</span><span class="spec-val">CEO / COO / 顧問 / 研究生</span></div>
+        <div class="spec-row"><span class="spec-key">Domains</span><span class="spec-val">06 領域</span></div>
+        <div class="spec-row"><span class="spec-key">Projects</span><span class="spec-val">08+ 進行中</span></div>
+        <div class="spec-row"><span class="spec-key">Brands</span><span class="spec-val">DesignJarvis / LOOK / Formosa31</span></div>
+        <div class="spec-row"><span class="spec-key">Core Stack</span><span class="spec-val">ESP32 · CNC · 3DP · AI</span></div>
+        <div class="spec-row"><span class="spec-key">Materials</span><span class="spec-val">SUS304 · AL7075 · PLA/PETG</span></div>
+        <div class="spec-row" style="border-bottom:none"><span class="spec-key">Base</span><span class="spec-val">Kaohsiung, Taiwan</span></div>
+        <div class="mt-4 pt-3 border-t hairline flex items-center justify-between text-[11px] text-muted">
+          <span>service@designjarvis.com</span>
+          <a href="/links" class="text-volt-400 hover:text-volt-500">→ /links</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 數據跑馬燈 -->
+  <div class="relative border-t hairline py-2.5 ticker-mask overflow-hidden font-mono text-[11px] text-muted">
+    <div class="ticker-track">
+      {[0, 1].map(() => (
+        <>
+          <span>MECHANICAL_DESIGN <span class="text-elec-400">●</span></span>
+          <span>CNC_MACHINING <span class="text-volt-400">●</span></span>
+          <span>3D_PRINTING <span class="text-elec-400">●</span></span>
+          <span>ESP32 / AIoT <span class="text-volt-400">●</span></span>
+          <span>SMART_FACTORY <span class="text-elec-400">●</span></span>
+          <span>STEAM_EDUCATION <span class="text-volt-400">●</span></span>
+          <span>MOLD_ENGINEERING <span class="text-elec-400">●</span></span>
+          <span>LCA_RESEARCH <span class="text-volt-400">●</span></span>
+          <span>PROJECT_INTEGRATION <span class="text-elec-400">●</span></span>
+          <span>WATCHMAKING_PARTS <span class="text-volt-400">●</span></span>
+        </>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // 終端機打字效果
+  (() => {
+    const el = document.getElementById('type-line');
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = 'integrate --mech --aiot --edu --mfg > deploy ./real-world';
+      return;
+    }
+    const lines = [
+      'integrate --mech --aiot --edu --mfg > deploy ./real-world',
+      'flexpro run --trial-production --cost-analysis',
+      'factory-jarvis monitor --energy --carbon --realtime',
+      'look teach --lego --3dp --robotics --humanoid',
+    ];
+    let li = 0, ci = 0, deleting = false;
+    function step() {
+      const line = lines[li];
+      if (!deleting) {
+        ci++;
+        el.textContent = line.slice(0, ci);
+        if (ci === line.length) { deleting = true; setTimeout(step, 2200); return; }
+        setTimeout(step, 38);
+      } else {
+        ci -= 3;
+        if (ci <= 0) { ci = 0; deleting = false; li = (li + 1) % lines.length; }
+        el.textContent = line.slice(0, Math.max(ci, 0));
+        setTimeout(step, 14);
+      }
+    }
+    step();
+  })();
+
+  // 粒子網絡
+  (() => {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+    const N = 70, LINK = 120;
+    const isDark = () => document.documentElement.classList.contains('dark');
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function init() {
+      particles = Array.from({ length: N }, () => ({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.6 + 0.6,
+        hue: Math.random() > 0.5 ? 217 : 262,
+      }));
+    }
+    function tick() {
+      ctx.clearRect(0, 0, w, h);
+      const alpha = isDark() ? 1 : 0.5;
+      for (const p of particles) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 90%, 65%, ${0.7 * alpha})`;
+        ctx.fill();
+      }
+      for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) {
+        const a = particles[i], b = particles[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < LINK) {
+          ctx.strokeStyle = `hsla(${(a.hue + b.hue) / 2}, 85%, 65%, ${(1 - d / LINK) * 0.35 * alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    resize(); init(); tick();
+    window.addEventListener('resize', () => { resize(); init(); });
+  })();
+</script>

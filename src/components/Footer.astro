@@ -1,0 +1,39 @@
+---
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/exhakuoho' },
+  { label: 'LinkedIn', href: '#' }, // TODO: 補上 LinkedIn 連結
+  { label: 'Instagram', href: '#' }, // TODO: 補上 Instagram 連結
+  { label: 'YouTube', href: '#' }, // TODO: 補上 YouTube 連結
+];
+---
+
+<footer id="contact" class="border-t hairline mt-24">
+  <div class="mx-auto max-w-6xl px-5 py-16">
+    <div class="grid md:grid-cols-2 gap-10">
+      <div>
+        <p class="eyebrow mb-3">Contact</p>
+        <h2 class="font-display text-3xl font-bold mb-4">合作、教學、專案洽詢</h2>
+        <p class="text-muted mb-6 max-w-md">
+          智慧製造、AIoT 產品開發、機構設計、STEAM 教育課程與跨領域整合,歡迎來信討論。
+        </p>
+        <a href="mailto:service@designjarvis.com" class="btn-primary">
+          service@designjarvis.com
+        </a>
+      </div>
+      <div class="md:text-right flex flex-col md:items-end justify-between gap-6">
+        <div class="flex flex-wrap md:justify-end gap-3">
+          {socials.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener" class="chip hover:border-volt-500/60 hover:text-elec-400 transition-colors">
+              {s.label}
+            </a>
+          ))}
+        </div>
+        <div class="text-sm text-muted font-mono">
+          <p>Kaohsiung, Taiwan</p>
+          <p>Southern Taiwan / Remote Consultation Available</p>
+          <p class="mt-4">© {new Date().getFullYear()} 曾唯誠 Tseng Weicheng · DesignJarvis</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
