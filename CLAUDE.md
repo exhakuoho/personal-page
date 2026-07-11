@@ -4,12 +4,12 @@
 曾唯誠(白空 Haku)的 Personal Brand Hub 官網。集中展示個人介紹、六大專長、專案作品、得獎與新聞、經歷、品牌與社群連結。目前為 MVP 階段,內容多為 placeholder,尚未接上正式網域與線上部署。
 
 ## 技術棧與部署鏈
-Astro 4 + Tailwind CSS → GitHub `exhakuoho/personal-page`(main 分支)→ Cloudflare Pages(**尚未建立**)→ `designjarvis.com`(**尚未綁定**)
+Astro 4 + Tailwind CSS → GitHub `exhakuoho/personal-page`(main 分支)→ Cloudflare Pages(Haku 自行建立)→ `haku.designjarvis.com`(子網域,**確定**,不佔用根網域 `designjarvis.com`,不影響現有 email routing 與 `home.designjarvis.com` 的既有網站)
 
 - 本機開發:`npm install && npm run dev`(http://localhost:4321)
 - 建置:`npm run build`,產出於 `dist/`
-- Cloudflare Pages 設定(建立時填):Build command `npm run build`,Output directory `dist`
-- 目前狀態:程式碼已可本機建置(12 頁全通過),尚未推送 Cloudflare Pages 部署鏈,尚未綁定網域。
+- Cloudflare Pages 設定(建立時填):Build command `npm run build`,Output directory `dist`,自訂網域填 `haku.designjarvis.com`
+- 目前狀態:程式碼已可本機建置(12 頁全通過)且已推送 GitHub;Cloudflare Pages 專案由 Haku 自行建立與綁定,尚待完成。
 
 ## 檔案地圖
 ```
@@ -45,7 +45,10 @@ public/
 - commit 訊息用中文簡述本次變更
 
 ## 不准動的東西
-（待 Haku 確認 — 見對話中的問題清單,尚未填寫,不可由 session 自行假設）
+- `astro.config.mjs` 的 `site: 'https://haku.designjarvis.com'`——已確定用子網域,不是根網域。改動前務必跟 Haku 確認,因為根網域 `designjarvis.com` 已有 email routing 與 `home.designjarvis.com` 網站在跑,子網域是刻意選擇避免衝突。
+- 以下項目待 Haku 回覆(尚未確認,不可自行假設):
+  - `src/content/config.ts` 的 zod schema 是否列為不可隨意變更?
+  - 深淺模式的 `localStorage.getItem('theme')` 機制,未來 LOOK/Formosa31 網站是否要共用同一套邏輯?
 
 ## 已知地雷
 （待 Haku 確認 — 見對話中的問題清單,尚未填寫,不可由 session 自行假設）
