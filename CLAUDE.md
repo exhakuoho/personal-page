@@ -46,12 +46,11 @@ public/
 
 ## 不准動的東西
 - `astro.config.mjs` 的 `site: 'https://haku.designjarvis.com'`——已確定用子網域,不是根網域。改動前務必跟 Haku 確認,因為根網域 `designjarvis.com` 已有 email routing 與 `home.designjarvis.com` 網站在跑,子網域是刻意選擇避免衝突。
-- 以下項目待 Haku 回覆(尚未確認,不可自行假設):
-  - `src/content/config.ts` 的 zod schema 是否列為不可隨意變更?
-  - 深淺模式的 `localStorage.getItem('theme')` 機制,未來 LOOK/Formosa31 網站是否要共用同一套邏輯?
+- `src/content/config.ts` 的 zod schema **可以改,但改的時候要注意**:欄位名稱或列舉值(例如 `kind`/`category` 的允許值)一旦變動,現有的 8 個專案 + 4 個得獎 + 6 個經歷 Markdown 檔案會跟新規則對不上,build 直接失敗。改 schema 時必須同一次 commit 內把所有既有內容檔案一起改完,不能只改 schema 檔案本身。
+- 深淺模式機制(`localStorage.getItem('theme')` + BaseLayout 的 inline script)**確定要延續給 LOOK / Formosa31 等未來網站共用**,所以這套 key 命名與判斷邏輯是共用元件的雛形,改動時要考慮跨站一致性,不要只從這個 repo 的角度改。
 
 ## 已知地雷
-（待 Haku 確認 — 見對話中的問題清單,尚未填寫,不可由 session 自行假設）
+（目前無 — 全新專案,尚未踩過坑。之後若遇到 Astro / Cloudflare Pages / Content Collections 相關問題,在此累積記錄）
 
 ## 相關文件
 - 進度.md(目前進度與下一步)
